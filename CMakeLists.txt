@@ -4,4 +4,6 @@ project(ove)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(ove src/main.cpp)
+add_executable(ove src/main.cpp
+        src/tokenization.hpp
+)
