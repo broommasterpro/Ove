@@ -74,7 +74,7 @@ public:
 private:
     //peaking and consuming here
     [[nodiscard]] std::optional<char> peak(int ahead = 1)const {
-        if (m_index + ahead >= m_src.length()) {
+        if (m_index + ahead > m_src.length()) {
             return {};
         }
         else {
