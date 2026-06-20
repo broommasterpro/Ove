@@ -19,6 +19,11 @@ std::string tokens_to_asm(const std::vector <Token> &tokens) {
                     output << "    mov rdi, " <<tokens.at(i + 1).value.value() << "\n";
                     output << "    syscall";
                 }
+                else {
+                    std::cerr <<"Expected semi-colon after int-lit: " <<
+                        tokens.at(i).value.value() << std::endl;
+                    exit(EXIT_FAILURE);
+                }
             }
         }
 
@@ -42,18 +47,14 @@ int main(int argc, char* argv[]) {
         contents = contents_stream.str();
     }
 
-
-    //error in tokenizer
-    Tokenizer tokenizer(std::move(contents)); //improved performance here with no copies made
+    Tokenizer tokenizer(std::move(contents));
     std::vector<Token> tokens = tokenizer.tokenize();
 
     {
         std::fstream file("out.asm", std::ios::out);
         file << tokens_to_asm(tokens);
     }
-
-    //error in executable here -> fix
-    system("nasm -f elf64 out.asm -o out.o");
-    system("ld out.o -o out");
+    system("nasm -felf64 out.asm");
+    system("ld out.o -o out"); //fix-> why need linker
     return EXIT_SUCCESS;
 }

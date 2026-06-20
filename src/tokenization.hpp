@@ -2,13 +2,8 @@
 
 #include <string>
 #include <vector>
-#include <optional>
 
-enum class TokenType {
-    exit,
-    int_lit,
-    semi
-};
+enum class TokenType { exit, int_lit, semi };
 
 struct Token {
     TokenType type;
@@ -18,11 +13,15 @@ struct Token {
 class Tokenizer {
 public:
     inline explicit Tokenizer(std::string src)
-        : m_src(std::move(src)){}
+        : m_src(std::move(src))
+    {
+    }
+
     inline std::vector<Token> tokenize()
     {
         std::vector<Token> tokens;
         std::string buf;
+        //fix -> add expected TokenType
         while (peak().has_value()) {
             if (std::isalpha(peak().value())) {
                 buf.push_back(consume());
@@ -67,19 +66,20 @@ public:
     }
 
 private:
-    [[nodiscard]] inline std::optional<char> peak(int ahead = 1) const{
+    [[nodiscard]] inline std::optional<char> peak(int ahead = 1) const
+    {
         if (m_index + ahead > m_src.length()) {
             return {};
         }
         else {
-            return m_src.at(m_index); //possibilities of error here -> try m_index + ahead
+            return m_src.at(m_index);
         }
     }
 
-    inline char consume(){
-        return m_src.at(m_index++); //no increments please
+    inline char consume()
+    {
+        return m_src.at(m_index++); //fix -> remove increments
     }
-
 
     const std::string m_src;
     size_t m_index = 0;
