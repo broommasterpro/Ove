@@ -39,6 +39,6 @@ int main(int argc, char* argv[]) {
         file << generator.generate();
     }
     system("nasm -felf64 out.asm");
-    system("ld out.o -o out"); //fix-> why need linker
+    system("ld out.o -o out");
     return EXIT_SUCCESS;
 }
