@@ -78,7 +78,7 @@ private:
 
     inline char consume()
     {
-        return m_src.at(m_index++); //fix -> remove increments
+        return m_src.at(m_index++);
     }
 
     const std::string m_src;
